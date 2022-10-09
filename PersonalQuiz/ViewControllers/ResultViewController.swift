@@ -9,25 +9,48 @@ import UIKit
 
 class ResultViewController: UIViewController {
     
-    // 1. Избавиться от кнопки возврата назад на экране результатов
-    // 2. Передать массив с ответами на экран с результатами
-    // 3. Определить наиболее часто встречающийся тип животного
-    // 4. Отобразить результаты в соответствии с этим животным
-
+    
+    @IBOutlet var chosenAnimalTF: UILabel!
+    @IBOutlet var chosenAnimalDescriptionTF: UILabel!
+    
     var answersChosen: [Answer] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.hidesBackButton = true
-        print(answersChosen)
+        
+        chosenAnimalTF.text = "ВЫ - \(getAnswersResult().rawValue)"
+        chosenAnimalDescriptionTF.text = "\(getAnswersResult().definition)"
     }
-
+    
     @IBAction func doneButtonPressed(_ sender: UIBarButtonItem) {
         navigationController?.dismiss(animated: true)
     }
     
-    
-    deinit {
-        print("\(type(of: self)) has been deallocated")
+    private func getAnswersResult() -> Animal {
+        var answers = answersChosen
+        
+        answers.sort { (lhs: Answer, rhs: Answer) -> Bool in
+            return lhs.animal.rawValue  < rhs.animal.rawValue
+        }
+        
+        var maxCount : Int = 0
+        var maxAnimal : Animal = answers[0].animal
+        var currentCount : Int = 0
+        let currentAnimal : Animal = answers[0].animal
+        
+        for answer in answers {
+            if answer.animal.rawValue == currentAnimal.rawValue {
+                currentCount = currentCount + 1
+            } else {
+                if currentCount > maxCount {
+                    maxCount = currentCount
+                    maxAnimal = answer.animal
+                } else {
+                    currentCount = 0
+                }
+            }
+        }
+        return maxAnimal
     }
 }
