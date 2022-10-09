@@ -34,9 +34,9 @@ class ResultViewController: UIViewController {
             return lhs.animal.rawValue  < rhs.animal.rawValue
         }
         
-        var maxCount : Int = 0
+        var maxCount = 0
         var maxAnimal : Animal = answers[0].animal
-        var currentCount : Int = 0
+        var currentCount = 0
         let currentAnimal : Animal = answers[0].animal
         
         for answer in answers {
