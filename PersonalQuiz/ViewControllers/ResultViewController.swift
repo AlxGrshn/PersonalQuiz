@@ -41,7 +41,7 @@ class ResultViewController: UIViewController {
         
         for answer in answers {
             if answer.animal.rawValue == currentAnimal.rawValue {
-                currentCount = currentCount + 1
+                currentCount += 1
             } else {
                 if currentCount > maxCount {
                     maxCount = currentCount
